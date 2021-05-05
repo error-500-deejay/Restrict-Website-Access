@@ -17,6 +17,15 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 function getDatFromLocalStorage(request, sender, sendResponse) {
   chrome.storage.local.get(["blockrequest"], function (data) {
     let datajsonin = data["blockrequest"];
+
+    if (
+      datajsonin == "" ||
+      datajsonin == [] ||
+      datajsonin == undefined ||
+      datajsonin == null
+    ) {
+      datajsonin = { action: "unblock", url: "" };
+    }
     datajson = datajsonin;
     console.log({ webListData: datajson });
     sendResponse({ webListData: datajson });
